@@ -14,8 +14,8 @@ library(foreach)
 
 
 # Time bins are 16.6667 ms (100/6) long. All times below in milliseconds.
-startTimes <- seq(from = 800, to = 2200, by = 100/6)
-windowLengths <- seq(from = 400, to = 1800, by = 100/6)
+startTimes <- seq(from = 700, to = 2200, by = 100/6)
+windowLengths <- seq(from = 300, to = 1800, by = 100/6)
 
 # For parallel processing
 numCores <- 14
@@ -27,7 +27,7 @@ outDir <- file.path(script.dir, "outputs")
 
 # get data
 
-df <- read.csv(file.path("data", "VanEngen2020.csv"), header=TRUE, sep=",")
+df <- read.csv(file.path("eyetracking-data", "VanEngen2020.csv"), header=TRUE, sep=",")
 
 
 #---- plot overall timecourse ----

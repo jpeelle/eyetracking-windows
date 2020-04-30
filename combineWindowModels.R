@@ -3,11 +3,14 @@
 #---- Import libraries and set options ----
 
 # Time bins are 16.6667 ms (100/6) long. All times below in milliseconds.
-startTimes <- seq(from = 800, to = 2200, by = 100/6)
-windowLengths <- seq(from = 400, to = 1800, by = 100/6)
+startTimes <- seq(from = 700, to = 2200, by = 100/6)
+windowLengths <- seq(from = 300, to = 1800, by = 100/6)
 
 # What do we call the collated save file? (date appended automatically)
-saveFileName <- "start800-2200_length400-1800"
+saveFileName <- "start700-2200_length300-1800"
+
+# ---- setup ----
+script.dir <- dirname(sys.frame(1)$ofile)
 
 
 #---- loop through to combine into one big data frame ----
