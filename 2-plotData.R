@@ -39,11 +39,11 @@ plotpvalues = function (data, thisTerm) {
   dfTmp <- data[data$term==thisTerm,]
   
   ggplot(dfTmp, aes(startTime, windowLength, fill = p.value)) +
-    geom_tile() +
+    geom_raster() +
     theme_bw() +
     theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
     coord_equal() + 
-    scale_fill_viridis_c(direction = -1, option = "plasma") +  # plasma, viridis
+    scale_fill_gradient(low = "white", high = "gray") +
     xlab("Start Time (ms)") +
     ylab("Window Length (ms)") +
     ggtitle(thisTerm)
@@ -53,11 +53,11 @@ plotestimate = function (data, thisTerm) {
   dfTmp <- data[data$term==thisTerm,]
   
   ggplot(dfTmp, aes(startTime, windowLength, fill = estimate)) +
-    geom_tile() +
+    geom_raster() + 
     theme_bw() +
     theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
     coord_equal() + 
-    scale_fill_viridis_c(direction = -1, option = "plasma") +  # plasma, viridis
+    scale_fill_gradient2(low = "muted(blue)", mid = "white", high = "red", midpoint = 0) +
     xlab("Start Time (ms)") +
     ylab("Window Length (ms)") +
     ggtitle(thisTerm)
