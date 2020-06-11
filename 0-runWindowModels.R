@@ -33,13 +33,15 @@ df <- read.csv(file.path("eyetracking-data", "VanEngen2020.csv"), header=TRUE, s
 #---- plot overall timecourse ----
 
 p <- ggplot(df, aes(TimeMS, PercentTarget, fill=Group, linetype=Condition)) + 
-  theme_bw(base_size = 10)+
+  theme_classic(base_size = 10) +
   ylab("Percent fixations to target") + 
   xlab("Time (ms)") +
-  ggtitle("Fixations to target words from carrier phrase onset") +
+  annotate("rect", xmin = 1300, xmax = 2300, ymin = -1, ymax = 100, alpha = .2) +
   stat_summary(fun.data=mean_se, geom="ribbon", alpha=.2) +
   stat_summary(aes(y=PercentTarget, linetype=Condition), fun=mean, geom="line") +
+  scale_fill_manual(values = c("red", "gray50")) +
   theme(legend.position="bottom")
+  
 
 p + theme(
   plot.title = element_text(size=14, face="bold.italic"),
