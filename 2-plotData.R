@@ -61,23 +61,30 @@ plotpvalues = function (data, thisTerm) {
     xlab("Start Time (ms)") +
     ylab("Window Length (ms)") +
     ggtitle(thisTerm) +
-    theme(legend.position="none"
+    #theme(legend.position="none" +
+    NULL
     )
 }
 
 plotestimate = function (data, thisTerm) {
   dfTmp <- data[data$term==thisTerm,]
   
+  yyz <- max(c(max(dfTmp$estimate), abs(min(dfTmp$estimate))))
+  yyx <- 0-yyz
+  
+  print(yyx)
+  print(yyz)
+  
   ggplot(dfTmp, aes(startTime, windowLength, fill = estimate)) +
     geom_raster() + 
     theme_bw() +
     theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
     coord_equal() + 
-    scale_fill_gradient2(low = "blue", mid = "white", high = "red", midpoint = 0) +
+    scale_fill_gradient2(low = "blue", mid = "white", high = "red", limits = c(yyx, yyz)) +
     xlab("Start Time (ms)") +
     ylab("Window Length (ms)") +
     ggtitle(thisTerm) +
-    theme(legend.position="none") +
+    #theme(legend.position="none") +
     NULL
 }
 
@@ -86,6 +93,7 @@ plotsEstimate <- lapply(termsToPlot, plotestimate, data = dfAll)
 
 plotsAll <- c(plotsEstimate, plotsP)
 ggarrange(plotlist = plotsAll, nrow = 2, ncol = 3)
+
 
 
 
@@ -114,12 +122,18 @@ plotpvalues = function (data, thisTerm) {
     xlab("Start Time (ms)") +
     ylab("Window Length (ms)") +
     ggtitle(thisTerm) +
-    theme(legend.position="none") +
+    #theme(legend.position="none") +
     NULL
 }
 
 plotestimate = function (data, thisTerm) {
   dfTmp <- data[data$term==thisTerm,]
+  
+  yyz <- max(c(max(dfTmp$estimate), abs(min(dfTmp$estimate))))
+  yyx <- 0-yyz
+  
+  print(yyx)
+  print(yyz)
   
   ggplot(dfTmp, aes(startTime, windowLength, fill = estimate)) +
     geom_raster() + 
@@ -130,7 +144,7 @@ plotestimate = function (data, thisTerm) {
     xlab("Start Time (ms)") +
     ylab("Window Length (ms)") +
     ggtitle(thisTerm) +
-    theme(legend.position="none") +
+    #theme(legend.position="none") +
     NULL
 }
 
@@ -165,11 +179,18 @@ plotpvalues = function (data, thisTerm) {
     xlab("Start Time (ms)") +
     ylab("Window Length (ms)") +
     ggtitle(thisTerm) +
-    theme(legend.position="none")
+    #theme(legend.position="none") +
+    NULL
 }
 
 plotestimate = function (data, thisTerm) {
   dfTmp <- data[data$term==thisTerm,]
+  
+  yyz <- max(c(max(dfTmp$estimate), abs(min(dfTmp$estimate))))
+  yyx <- 0-yyz
+  
+  print(yyx)
+  print(yyz)
   
   ggplot(dfTmp, aes(startTime, windowLength, fill = estimate)) +
     geom_raster() + 
@@ -180,7 +201,8 @@ plotestimate = function (data, thisTerm) {
     xlab("Start Time (ms)") +
     ylab("Window Length (ms)") +
     ggtitle(thisTerm) +
-    theme(legend.position="none")
+    #theme(legend.position="none") +
+    NULL
 }
 
 plotsP <- lapply(termsToPlot, plotpvalues, data = dfAll)
@@ -213,11 +235,18 @@ plotpvalues = function (data, thisTerm) {
     xlab("Start Time (ms)") +
     ylab("Window Length (ms)") +
     ggtitle(thisTerm) +
-    theme(legend.position="none")
+    #theme(legend.position="none") +
+    NULL
 }
 
 plotestimate = function (data, thisTerm) {
   dfTmp <- data[data$term==thisTerm,]
+  
+  yyz <- max(c(max(dfTmp$estimate), abs(min(dfTmp$estimate))))
+  yyx <- 0-yyz
+  
+  print(yyx)
+  print(yyz)
   
   ggplot(dfTmp, aes(startTime, windowLength, fill = estimate)) +
     geom_raster() + 
@@ -228,7 +257,8 @@ plotestimate = function (data, thisTerm) {
     xlab("Start Time (ms)") +
     ylab("Window Length (ms)") +
     ggtitle(thisTerm) +
-    theme(legend.position="none")
+    #theme(legend.position="none") +
+    NULL
 }
 
 plotsP <- lapply(termsToPlot, plotpvalues, data = dfAll)
@@ -236,5 +266,6 @@ plotsEstimate <- lapply(termsToPlot, plotestimate, data = dfAll)
 
 plotsAll <- c(plotsEstimate, plotsP)
 ggarrange(plotlist = plotsAll, nrow = 2, ncol = 3)
+
 
 
