@@ -20,12 +20,12 @@ dfAll$term <- recode(dfAll$term,
                      Group1 = "age",
                      SNR1 = "noise",
                      Condition1 = "frequency",
-                     "ot1:Group1" = "linear x age",
-                     "ot1:SNR1" = "linear x noise",
-                     "ot1:Condition1" = "linear x frequency",
-                     "Group1:Condition1" = "age x frequency",
-                     "Group1:SNR1" = "age x noise",
-                     "Group1:SNR1:Condition1" = "age x noise x frequency")
+                     "ot1:Group1" = "linear:age",
+                     "ot1:SNR1" = "linear:noise",
+                     "ot1:Condition1" = "linear:frequency",
+                     "Group1:Condition1" = "age:frequency",
+                     "Group1:SNR1" = "age:noise",
+                     "Group1:SNR1:Condition1" = "age:noise:frequency")
 
 
 #---- plot main effects of time ----
@@ -63,7 +63,6 @@ plotpvalues = function (data, thisTerm) {
     ggtitle(thisTerm) +
     #theme(legend.position="none" +
     NULL
-    )
 }
 
 plotestimate = function (data, thisTerm) {
@@ -157,9 +156,9 @@ ggarrange(plotlist = plotsAll, nrow = 2, ncol = 3)
 
 
 
-#---- plot some interactions ----
+#---- plot liner effects of age, noise and frequency ----
 
-termsToPlot <- c("linear x age", "linear x noise", "linear x frequency")
+termsToPlot <- c("linear:age", "linear:noise", "linear:frequency")
 
 # filter rows
 
@@ -213,9 +212,9 @@ ggarrange(plotlist = plotsAll, nrow = 2, ncol = 3)
 
 
 
-#---- plot more interactions ----
+#---- plot more effects ----
 
-termsToPlot <- c("age x noise", "age x frequency", "age x noise x frequency")
+termsToPlot <- c("age:noise", "age:frequency", "age:noise:frequency")
 
 # filter rows
 
