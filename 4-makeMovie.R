@@ -12,7 +12,7 @@ library(grid)
 
 
 # Time bins are 16.6667 ms (100/6) long. All times below in milliseconds.
-#startTimes <- seq(from = 700, to = 2200, by = 100/6)
+startTime <- 1300
 windowLengths <- seq(from = 300, to = 1800, by = 100/6)
 numCores <- 14
 
@@ -21,9 +21,6 @@ numCores <- 14
 script.dir <- dirname(sys.frame(1)$ofile)
 outDir <- file.path(script.dir, "movieimg")
 
-#cl <- makeCluster(numCores)
-#registerDoParallel(cores=numCores)
-
 
 # get data
 
@@ -31,8 +28,6 @@ df <- read.csv(file.path("eyetracking-data", "VanEngen2020.csv"), header=TRUE, s
 
 
 #---- plot overall timecourse ----
-
-startTime <- 1300
 
 
 for(i in 1:length(windowLengths)) {
