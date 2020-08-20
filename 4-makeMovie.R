@@ -4,17 +4,13 @@
 #---- Import libraries and set options ----
 
 library(ggplot2)
-library(lme4)
-library(grid)
-#library(broom)
-#library(doParallel)
-#library(foreach)
+library(ggpubr)
+library(dplyr)
 
 
 # Time bins are 16.6667 ms (100/6) long. All times below in milliseconds.
 startTime <- 1300
 windowLengths <- seq(from = 300, to = 1800, by = 100/6)
-numCores <- 14
 
 
 # ---- setup ----
@@ -23,8 +19,9 @@ outDir <- file.path(script.dir, "movieimg")
 
 
 # get data
-
 df <- read.csv(file.path("eyetracking-data", "VanEngen2020.csv"), header=TRUE, sep=",")
+
+
 
 
 #---- plot overall timecourse ----
@@ -72,22 +69,13 @@ for(i in 1:length(windowLengths)) {
     theme(plot.title = element_text(hjust = 0.5))
   
   
-  # p + theme(
-  #   plot.title = element_text(size=40, face="bold.italic"),
-  #   axis.title.x = element_text(size=40, face="bold"),
-  #   axis.title.y = element_text(size=40, face="bold"),
-  #   legend.title = element_text(size=26),
-  #   legend.text = element_text(size=26)
-  # )
-  
-
-  
-  
   cond <- c("linear", "quadratic", "cubic", "age", "noise", "frequency", "linear:age", "linear:noise", "linear:frequency")
   
   dfstats <- dfstats %>% filter(term %in% cond)
   
-  pp <- ggplot(data = dfstats, aes(x=term, y=p.value)) + 
+  dfstats$term <- factor(dfstats$term, cond)
+
+  pp <- ggplot(data = dfstats, aes(x=term, y=p.value)) +
     geom_bar(stat="identity", color = "white", fill = "lightblue") +
     geom_hline(yintercept = .05, linetype = "dotted", color = "blue", size = 0.5) +
     annotate(geom="text", x = 1.5, y = .08, label="p = .05", color = "blue") +
@@ -95,18 +83,18 @@ for(i in 1:length(windowLengths)) {
     theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
     ylim(0, 1) +
     ylab("p value")
-  
-  
-  
-  pest <- ggplot(data = dfstats, aes(x=term, y=estimate)) + 
+
+
+
+  pest <- ggplot(data = dfstats, aes(x=term, y=estimate)) +
     geom_bar(stat="identity", color = "white", fill = "lightgreen") +
     theme_classic(base_size = 12) +
     theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
     ylim(-3, 14) +
     ylab("parameter estimate")
+
   
-  
-  ggp <- ggarrange(p, ggarrange(pp, pest, ncol = 2), nrow = 2)
+  ggp <- ggarrange(p, ggarrange(pest, pp, ncol = 2), nrow = 2)
   
   png(filename = outFile,
       width = 800, height = 800, units = "px", pointsize = 12,
