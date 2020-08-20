@@ -133,4 +133,4 @@ foreach(i = 1:length(startTimes)) %dopar% {
 stopCluster(cl)
 
 # To combine all of these individual models files into a big dataframe,
-# use combineWindowModels.R
+# use 1-combineWindowModels.R
