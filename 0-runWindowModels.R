@@ -8,7 +8,7 @@
 
 library(ggplot2)
 library(lme4)
-library(broom)
+library(broom.mixed)
 library(doParallel)
 library(foreach)
 
@@ -58,21 +58,18 @@ show(p)
 #---- model parameters that don't change with time ----
 
 
-#time selection
+# time selection
 
 t <- poly(unique(df$TimePoint), 3)
 
 df[,paste("ot", 1:3, sep="")] <- 
   t[df$TimePoint, 1:3]
 
-#sum coding
-df$Group <- C(df$Group, sum)
-df$SNR <- C(df$SNR, sum)
-df$Condition <- C(df$Condition, sum)
+# sum coding
 
-#contrasts(df$Group)
-#contrasts(df$SNR) 
-#contrasts(df$Condition)
+df$Group <- C(as.factor(df$Group), sum)
+df$SNR <- C(as.factor(df$SNR), sum)
+df$Condition <- C(as.factor(df$Condition), sum)
 
 
 #---- loop through start/length combinations and run model ----
@@ -81,7 +78,6 @@ cl <- makeCluster(numCores)
 registerDoParallel(cores=numCores)
 
 foreach(i = 1:length(startTimes)) %dopar% {
-  
   for(thisLength in windowLengths) {
     outFile <- file.path(outDir, sprintf("%g_%g.csv", startTimes[i], thisLength))
     
@@ -94,9 +90,9 @@ foreach(i = 1:length(startTimes)) %dopar% {
       
       print(sprintf("%s not found, running model.", outFile))
       
-      # Select datasubset based on time parameters
-      dfTrimmed <- df[df$TimeMS > startTimes[i],]
-      dfTrimmed <- dfTrimmed[dfTrimmed$TimeMS < (startTimes[i] + thisLength),]
+      # Select data subset based on time parameters
+      dfTrimmed <- df[df$TimeMS >= startTimes[i],]
+      dfTrimmed <- dfTrimmed[dfTrimmed$TimeMS <= (startTimes[i] + thisLength),]
       dfTrimmed$TimePoint <- dfTrimmed$TimePoint - dfTrimmed$TimePoint[1] + 1
 
       # polynomial predictors
@@ -130,6 +126,7 @@ foreach(i = 1:length(startTimes)) %dopar% {
   } # window lengths
 
 } # %dopar%
+
 stopCluster(cl)
 
 # To combine all of these individual models files into a big dataframe,
