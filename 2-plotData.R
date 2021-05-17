@@ -4,8 +4,9 @@
 library(ggplot2)
 library(ggpubr)
 library(dplyr)
+library(viridis)
 
-dataFileName <- "start700-2200_length300-1800_2020-04-29-2156.csv"
+dataFileName <- "start700-2200_length300-1800_2021-05-16-0642.csv"
 
 #---- read in data we want ----
 
@@ -57,11 +58,12 @@ plotpvalues = function (data, thisTerm) {
     theme_bw() +
     theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
     coord_equal() + 
-    scale_fill_gradient(low = "white", high = "gray", limits = c(0, 1)) +
+    scale_fill_viridis(option = "turbo", begin = 0, end = 1, limits = c(0, 1)) +
+    #scale_fill_gradient(low = "white", high = "gray", limits = c(0, 1)) +
     xlab("Start Time (ms)") +
     ylab("Window Length (ms)") +
     ggtitle(thisTerm) +
-    #theme(legend.position="none" +
+    theme(legend.position="none") +
     NULL
 }
 
@@ -83,7 +85,7 @@ plotestimate = function (data, thisTerm) {
     xlab("Start Time (ms)") +
     ylab("Window Length (ms)") +
     ggtitle(thisTerm) +
-    #theme(legend.position="none") +
+    theme(legend.position="none") +
     NULL
 }
 
@@ -117,11 +119,12 @@ plotpvalues = function (data, thisTerm) {
     theme_bw() +
     theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
     coord_equal() + 
-    scale_fill_gradient(low = "white", high = "gray") +
+    scale_fill_viridis(option = "turbo", begin = 0, end = 1, limits = c(0, 1)) +
+    #scale_fill_gradient(low = "white", high = "gray") +
     xlab("Start Time (ms)") +
     ylab("Window Length (ms)") +
     ggtitle(thisTerm) +
-    #theme(legend.position="none") +
+    theme(legend.position="none") +
     NULL
 }
 
@@ -143,7 +146,7 @@ plotestimate = function (data, thisTerm) {
     xlab("Start Time (ms)") +
     ylab("Window Length (ms)") +
     ggtitle(thisTerm) +
-    #theme(legend.position="none") +
+    theme(legend.position="none") +
     NULL
 }
 
@@ -156,7 +159,7 @@ ggarrange(plotlist = plotsAll, nrow = 2, ncol = 3)
 
 
 
-#---- plot liner effects of age, noise and frequency ----
+#---- plot linear effects of age, noise and frequency ----
 
 termsToPlot <- c("linear:age", "linear:noise", "linear:frequency")
 
@@ -174,11 +177,12 @@ plotpvalues = function (data, thisTerm) {
     theme_bw() +
     theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
     coord_equal() + 
-    scale_fill_gradient(low = "white", high = "gray") +
+    scale_fill_viridis(option = "turbo", begin = 0, end = 1, limits = c(0, 1)) +
+    #scale_fill_gradient(low = "white", high = "gray") +
     xlab("Start Time (ms)") +
     ylab("Window Length (ms)") +
     ggtitle(thisTerm) +
-    #theme(legend.position="none") +
+    theme(legend.position="none") +
     NULL
 }
 
@@ -200,7 +204,7 @@ plotestimate = function (data, thisTerm) {
     xlab("Start Time (ms)") +
     ylab("Window Length (ms)") +
     ggtitle(thisTerm) +
-    #theme(legend.position="none") +
+    theme(legend.position="none") +
     NULL
 }
 
@@ -230,11 +234,12 @@ plotpvalues = function (data, thisTerm) {
     theme_bw() +
     theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
     coord_equal() + 
-    scale_fill_gradient(low = "white", high = "gray") +
+    scale_fill_viridis(option = "turbo", begin = 0, end = 1, limits = c(0, 1)) +
+    #scale_fill_gradient(low = "white", high = "gray") +
     xlab("Start Time (ms)") +
     ylab("Window Length (ms)") +
     ggtitle(thisTerm) +
-    #theme(legend.position="none") +
+    theme(legend.position="none") +
     NULL
 }
 
@@ -256,7 +261,7 @@ plotestimate = function (data, thisTerm) {
     xlab("Start Time (ms)") +
     ylab("Window Length (ms)") +
     ggtitle(thisTerm) +
-    #theme(legend.position="none") +
+    theme(legend.position="none") +
     NULL
 }
 
