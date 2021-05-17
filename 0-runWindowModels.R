@@ -18,7 +18,7 @@ startTimes <- seq(from = 700, to = 2200, by = 100/6)
 windowLengths <- seq(from = 300, to = 1800, by = 100/6)
 
 # For parallel processing
-numCores <- 14
+numCores <- 17
 
 # ---- setup ----
 script.dir <- dirname(sys.frame(1)$ofile)
@@ -92,7 +92,7 @@ foreach(i = 1:length(startTimes)) %dopar% {
       
       # Select data subset based on time parameters
       dfTrimmed <- df[df$TimeMS >= startTimes[i],]
-      dfTrimmed <- dfTrimmed[dfTrimmed$TimeMS <= (startTimes[i] + thisLength),]
+      dfTrimmed <- dfTrimmed[dfTrimmed$TimeMS <= (startTimes[i] + thisLength + .1),]
       dfTrimmed$TimePoint <- dfTrimmed$TimePoint - dfTrimmed$TimePoint[1] + 1
 
       # polynomial predictors
